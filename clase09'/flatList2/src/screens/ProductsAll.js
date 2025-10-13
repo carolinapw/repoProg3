@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image } from 'react-native';
-import { FlatList } from 'react-native';
+import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
 import Card from "../components/Card"; 
 
 class ProductsAll extends Component {
@@ -117,7 +116,7 @@ class ProductsAll extends Component {
     
     render() {
         return (
-        <View>
+        <View style={styles.flatlist}>
         <FlatList
           data={this.state.allProducts}
           renderItem={ ({item}) => <Card product={item}/>}
@@ -127,5 +126,12 @@ class ProductsAll extends Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+  flatlist: {
+    width: '100%',
+    flex: 1
+  }
+})
 
 export default ProductsAll;
