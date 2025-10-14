@@ -26,7 +26,7 @@ class ProductsAll extends Component {
         return (
           <View style={styles.center}>
             <ActivityIndicator size="large" color='green'/>
-            <Text style={{ marginTop: 8 }}>Cargando personajes…</Text>
+            <Text style={styles.text}>Cargando personajes…</Text>
           </View>
         );
       }
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     flex: 1
   }, 
   center: { flex: 1, alignItems: "center", justifyContent: "center" },
+  text: {marginTop: 8}
 })
 
 export default ProductsAll;
