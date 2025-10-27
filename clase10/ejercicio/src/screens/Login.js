@@ -1,16 +1,37 @@
 import React, { Component } from "react";
 import { View, Text, Pressable, StyleSheet, TextInput } from "react-native";
+import { auth } from '../firebase/config'
 
  class Login extends Component {
   constructor(props){
     super(props);
-    this.state = { email: "", password: "" };
+    this.state = { email: "", password: "", error: '', loggedIn: false };
   }
 
-  onSubmit() {
+  onSubmit(email, password) {
     console.log("Login submit:", this.state);
-    this.props.navigation.navigate("HomeMenu");
+
+    // validaciones
+    if (!this.state.email.includes("@")) {
+      this.setState({ error: "Email mal formateado" });
+      return
+    }
+    if (this.state.password.length < 6) {
+      this.setState({ error: "La password debe tener una longitud mínima de 6 caracteres" });
+      return
+    }
+
+    // log in en firebase
+    auth.signInWithEmailAndPassword(email, password)
+      .then((response) => {
+        this.setState({loggedIn: true});
+        this.props.navigation.navigate("HomeMenu");
+      })
+      .catch(error => {
+        this.setState({error: 'Credenciales incorrectas.'})
+      })
   }
+
 
   render() {
     return (
@@ -35,8 +56,8 @@ import { View, Text, Pressable, StyleSheet, TextInput } from "react-native";
             value={this.state.password}
             onChangeText={(text) => this.setState({ password: text })}
           />
-
-          <Pressable style={styles.btnOrange} onPress={() => this.onSubmit()}>
+          <Text>{this.state.error}</Text>
+          <Pressable style={styles.btnOrange} onPress={() => this.onSubmit(this.state.email,this.state.password)}>
             <Text style={styles.btnTxt}>Log in</Text>
           </Pressable>
 
