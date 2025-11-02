@@ -1,4 +1,3 @@
-// src/screens/Users.js
 import React, { Component } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { db } from "../firebase/config";
@@ -14,9 +13,12 @@ class Users extends Component {
         docs => {
             let users = [];
             docs.forEach(doc => {
-                users.push({ id: doc.id, data: doc.data() });
+                users.push({ 
+                    id: doc.id, 
+                    data: doc.data() 
+                });
             });
-            this.setState({ users, loading: false });
+            this.setState({ users:users, loading: false });
         });
   }
 
@@ -26,7 +28,7 @@ class Users extends Component {
         <Text style={styles.title}>Usuarios</Text>
         <FlatList
             data={this.state.users}
-            keyExtractor={item => item.id.toString()}
+            keyExtractor={(item) => item.id.toString()}
             renderItem={ ({item}) => 
                 <View style={styles.row}>
                     <Text style={styles.email}>Email: {item.data.email}</Text>
