@@ -17,6 +17,7 @@ class NuevoPost extends Component {
     db.collection("posts").add({
       text: this.state.text,
       email: auth.currentUser.email,
+      likes: [],
       createdAt: Date.now()
     })
     .then(response => {
